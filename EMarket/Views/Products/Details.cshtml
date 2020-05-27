@@ -1,0 +1,44 @@
+﻿@model IEnumerable<EMarket.Models.Product>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Product Details</h2>
+<head>
+    <style>
+        .btn {
+            border-radius: 12px;
+        }
+    </style>
+</head>
+@foreach (var i in Model)
+{
+
+    <div class="container">
+        <div class="page-header panel-primary">
+            <p class="text-center" style="font-size: 50px; text-decoration: solid;">@i.name - @i.price EGP (@i.category.name)</p>
+        </div>
+
+        <div class="pager ">
+            <img src="~/Uploads/@i.image" class="img-rounded" style="height:50%; width:50%;" />
+        </div>
+
+        <div>
+            <p class="panel panel-footer text-center" style="font-size: 20px;">Description         | @i.description</p>
+        </div>
+
+        <div class="modal-footer">
+            <a href="@Url.Action("Edit", "Products", new { id = i.id})"><button class="btn btn-success">Edit Product</button></a>
+            <a href="@Url.Action("Delete", "Products", new { id = i.id})"><button class="btn btn-danger" onclick="return confirm(' Are You Sure You Want To Delete This Product ?');">Delete Product</button></a>
+        </div>
+    </div>
+
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
