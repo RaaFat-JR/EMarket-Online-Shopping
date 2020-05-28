@@ -64,25 +64,97 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h2 class="modal-title">Cart List</h2>
                 </div>
-                @{
-
-                    }
+                
                     <div class="modal-body">
 
                         @foreach (var i in x)
-                        {
+                        { 
                         <div class="panel-footer">
 
                             <p>@i.Product.name - @i.Product.price</p>
+                            
+                                    @{
+                                        TimeSpan time = DateTime.Now - i.Added_at;
+                                        if (time.TotalMinutes < 1)
+                                        {
+                                            <label>Added just now</label>
+                                        }
+                                        else if (time.TotalHours < 1)
+                                        {
+                                            if ((int)time.TotalMinutes == 1)
+                                            {
+                                                <label>Added One Minute Ago</label>
+                                            }
+                                            else
+                                            {
+                                                @Html.Label("Added " + (int)time.TotalMinutes + " Minutes ago")
+                                            }
+                                        }
+                                        else if (time.TotalDays < 1)
+                                        {
+                                            if ((int)time.TotalHours == 1)
+                                            {
+                                                <label>Added One Hour Ago</label>
+                                            }
+                                            else
+                                            {
+                                                @Html.Label("Added " + (int)time.TotalHours + " Hours ago")
+                                            }
+                                        }
+                                        else if (time.TotalDays < 7)
+                                        {
+                                            if ((int)time.TotalDays == 1)
+                                            {
+                                                <label>Added One Day Ago</label>
+                                            }
+                                            else
+                                            {
+                                                @Html.Label("Added " + (int)time.TotalDays + " Days ago")
+                                            }
+                                        }
+                                        else if (time.TotalDays < 30.4368)
+                                        {
+                                            if ((int)(time.TotalDays / 7) == 1)
+                                            {
+                                                <label>Added One Week Ago</label>
+                                            }
+                                            else
+                                            {
+                                                @Html.Label("Added " + (int)(time.TotalDays / 7) + " Weeks ago")
+                                            }
+                                        }
+                                        else if (time.TotalDays < 365.242)
+                                        {
+                                            if ((int)(time.TotalDays / 30.4368) == 1)
+                                            {
+                                                <label>Added One Month Ago</label>
+                                            }
+                                            else
+                                            {
+                                                @Html.Label("Added " + (int)(time.TotalDays / 30.4368) + " Months ago")
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if ((int)(time.TotalDays / 365.242) == 1)
+                                            {
+                                                <label>Added One Year Ago</label>
+                                            }
+                                            else
+                                            {
+                                                @Html.Label("Added " + (int)(time.TotalDays / 365.242) + " Years ago")
+                                            }
+                                        }
+                                    }
+                                
+                                
+                                <br />
 
+                                <a href="@Url.Action("DeleteFromCart", "Products", new { prodID = i.Product_id })"><button class="btn btn-danger btn-sm" onclick="return confirm(' Are You Sure You Want To Delete This Product ?');">REMOVE</button></a>
+                            </div>
 
-
-                            <a href="@Url.Action("DeleteFromCart", "Products", new { prodID = i.Product_id })"><button class="btn btn-danger btn-sm" onclick="return confirm(' Are You Sure You Want To Delete This Product ?');">REMOVE</button></a>
+                            }
                         </div>
-
-                        }
-
-                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
